@@ -1,7 +1,7 @@
 const { fakerDE: faker } = require('@faker-js/faker');
 const fs = require('fs');
 const path = require('path');
-const PARAGRAPHS = 50000;
+const PARAGRAPHS = 5000;
 
 function createSampleFile() {
   const filePath = path.join(__dirname, 'files', 'sample.txt');

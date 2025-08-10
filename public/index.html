@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Server-Sent Events Listener</title>
+    </head>
+
+    <body>
+        <button id="listenBtn">Listen to Events</button>
+        <div id="events"></div>
+
+        <script>
+            const btn = document.getElementById('listenBtn');
+            const eventsDiv = document.getElementById('events');
+            let eventSource = null;
+
+            btn.addEventListener('click', () => {
+                if (eventSource) return; // Prevent multiple connections
+                eventSource = new EventSource('http://localhost:3000/events');
+                eventSource.onmessage = function (e) {
+                    const p = document.createElement('p');
+                    p.textContent = e.data;
+                    eventsDiv.appendChild(p);
+                };
+                eventSource.onerror = function () {
+                    eventSource.close();
+                    eventSource = null;
+                    const p = document.createElement('p');
+                    p.textContent = 'Connection closed or error occurred.';
+                    eventsDiv.appendChild(p);
+                };
+            });
+        </script>
+    </body>
+
+</html>
